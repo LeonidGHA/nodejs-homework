@@ -1,5 +1,5 @@
 const { Contact, shemas } = require("../../models/contact");
-const RequestError = require("../../helpers/RequestError");
+const { RequestError } = require("../../helpers/RequestError");
 
 const updateContactById = async (req, res, next) => {
   try {

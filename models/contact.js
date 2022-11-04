@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
+const { uniqueValidateError } = require("../helpers");
 
 const contactShema = new Schema(
   {
@@ -10,6 +11,7 @@ const contactShema = new Schema(
     email: {
       type: String,
       required: [true, "Set email for contact"],
+      unique: true,
     },
     phone: {
       type: String,
@@ -22,6 +24,8 @@ const contactShema = new Schema(
   },
   { versionKey: false, timestamps: true }
 );
+
+contactShema.post("save", uniqueValidateError);
 
 const addSchema = Joi.object({
   name: Joi.string().required(),
