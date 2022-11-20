@@ -1,15 +1,12 @@
-const { Contact, shemas } = require("../../models/contact");
-const { RequestError } = require("../../helpers/RequestError");
+const { Contact } = require("../../models/contact");
+const { RequestError } = require("../../helpers");
 
 const putContact = async (req, res, next) => {
   try {
-    const { error } = shemas.putSchema.validate(req.body);
-    if (error) {
-      throw RequestError(400, error.message);
-    }
+    const { _id: owner } = req.user;
     const { contactId } = req.params;
-    const changedContact = await Contact.findByIdAndUpdate(
-      contactId,
+    const changedContact = await Contact.findOneAndUpdate(
+      { owner, contactId },
       req.body,
       { new: true }
     );

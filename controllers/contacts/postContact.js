@@ -1,13 +1,9 @@
-const { Contact, shemas } = require("../../models/contact");
-const { RequestError } = require("../../helpers/RequestError");
+const { Contact } = require("../../models/contact");
 
 const postContact = async (req, res, next) => {
   try {
-    const { error } = shemas.addSchema.validate(req.body);
-    if (error) {
-      throw RequestError(400, error.message);
-    }
-    const newContact = await Contact.create(req.body);
+    const { _id: owner } = req.user;
+    const newContact = await Contact.create({ ...req.body, owner });
     res.status(201).json(newContact);
   } catch (error) {
     next(error);
