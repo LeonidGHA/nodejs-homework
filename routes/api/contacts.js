@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const control = require("../../controllers/contacts");
+const { cntrlWrapper } = require("../../helpers");
 const { isValidId, authentication, isValidBody } = require("../../middlewares");
 const { schemas } = require("../../models/contact");
 
@@ -21,10 +22,10 @@ router.delete("/:contactId", authentication, isValidId, control.deleteContact);
 
 router.put(
   "/:contactId",
-  isValidBody(schemas.putSchema),
   authentication,
   isValidId,
-  control.putContact
+  isValidBody(schemas.putSchema),
+  cntrlWrapper(control.putContact)
 );
 
 router.patch(
