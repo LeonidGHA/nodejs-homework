@@ -1,14 +1,10 @@
 const current = async (req, res, next) => {
-  try {
-    const { email, subscription } = req.user;
+  const { email, subscription } = req.user;
 
-    res.json({
-      email,
-      subscription,
-    });
-  } catch (error) {
-    next(error);
-  }
+  res.json({
+    email,
+    subscription,
+  });
 };
 
 module.exports = current;

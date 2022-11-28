@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
-// const { uniqueValidateError } = require("../helpers");
 
 const emailRegexp =
   /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
@@ -32,8 +31,6 @@ const contactShema = new Schema(
   },
   { versionKey: false, timestamps: true }
 );
-
-// contactShema.post("save", uniqueValidateError);
 
 const addSchema = Joi.object({
   name: Joi.string().required(),
