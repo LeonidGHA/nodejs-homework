@@ -7,18 +7,28 @@ const { cntrlWrapper } = require("../../helpers");
 const { isValidId, authentication, isValidBody } = require("../../middlewares");
 const { schemas } = require("../../models/contact");
 
-router.get("/", authentication, control.getAllContacts);
+router.get("/", authentication, cntrlWrapper(control.getAllContacts));
 
-router.get("/:contactId", authentication, isValidId, control.getContactById);
+router.get(
+  "/:contactId",
+  authentication,
+  isValidId,
+  cntrlWrapper(control.getContactById)
+);
 
 router.post(
   "/",
   authentication,
   isValidBody(schemas.addSchema),
-  control.postContact
+  cntrlWrapper(control.postContact)
 );
 
-router.delete("/:contactId", authentication, isValidId, control.deleteContact);
+router.delete(
+  "/:contactId",
+  authentication,
+  isValidId,
+  cntrlWrapper(control.deleteContact)
+);
 
 router.put(
   "/:contactId",
@@ -33,7 +43,7 @@ router.patch(
   isValidBody(schemas.updateSchema),
   authentication,
   isValidId,
-  control.updateContactById
+  cntrlWrapper(control.updateContactById)
 );
 
 module.exports = router;

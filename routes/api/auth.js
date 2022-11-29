@@ -3,18 +3,33 @@ const express = require("express");
 const router = express.Router();
 
 const control = require("../../controllers/auth");
-const { isValidBody, authentication } = require("../../middlewares");
+const { cntrlWrapper } = require("../../helpers");
+const { isValidBody, authentication, upload } = require("../../middlewares");
 const { schemas } = require("../../models/user");
 
-router.post("/signup", isValidBody(schemas.signUpSchema), control.signUp);
-router.post("/login", isValidBody(schemas.loginSchema), control.logIn);
-router.get("/logout", authentication, control.logOut);
-router.get("/current", authentication, control.current);
+router.post(
+  "/signup",
+  isValidBody(schemas.signUpSchema),
+  cntrlWrapper(control.signUp)
+);
+router.post(
+  "/login",
+  isValidBody(schemas.loginSchema),
+  cntrlWrapper(control.logIn)
+);
+router.get("/logout", authentication, cntrlWrapper(control.logOut));
+router.get("/current", authentication, cntrlWrapper(control.current));
 router.patch(
   "/",
   authentication,
   isValidBody(schemas.subscriptionSchema),
-  control.subscription
+  cntrlWrapper(control.subscription)
+);
+router.patch(
+  "/avatars",
+  authentication,
+  upload.single("avatar"),
+  cntrlWrapper(control.updateAvatar)
 );
 
 module.exports = router;
