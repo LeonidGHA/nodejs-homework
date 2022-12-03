@@ -12,19 +12,31 @@ router.post(
   isValidBody(schemas.signUpSchema),
   cntrlWrapper(control.signUp)
 );
+
+router.post(
+  "/verify",
+  isValidBody(schemas.verificationSchema),
+  cntrlWrapper(control.resendVerifivation)
+);
+router.get("/verify/:verificationToken", cntrlWrapper(control.verification));
+
 router.post(
   "/login",
   isValidBody(schemas.loginSchema),
   cntrlWrapper(control.logIn)
 );
+
 router.get("/logout", authentication, cntrlWrapper(control.logOut));
+
 router.get("/current", authentication, cntrlWrapper(control.current));
+
 router.patch(
   "/",
   authentication,
   isValidBody(schemas.subscriptionSchema),
   cntrlWrapper(control.subscription)
 );
+
 router.patch(
   "/avatars",
   authentication,
